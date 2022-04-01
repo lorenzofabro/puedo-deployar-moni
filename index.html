@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.jpeg" />
+    <title>Puedo deployar hoy?</title>
+  </head>
+  <body id="body-wrapper" onload="javascript:canIDeployToday()">
+    <div class="div-wrapper">
+      <h3 id="tagline">Puedo deployar hoy?</h3>
+      <h2 id="message"></h2>
+      <span id="reload">Apretá el espacio</span>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.body.onkeyup = function (e) {
+    if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+      canIDeployToday();
+    }
+  };
+
+  function canIDeployToday() {
+    var today = new Date();
+    var day = today.getDay();
+    var dayOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    var dayOfWeekToday = dayOfWeek[day];
+    var monthDay = today.getDate();
+    var message = "";
+    if (dayOfWeekToday == "Sunday" || dayOfWeekToday == "Saturday") {
+      message = cantDeploy(true);
+    } else {
+      if (monthDay >= 27 || monthDay <= 10) {
+        message = cantDeploy(false);
+      } else {
+        message = canDeploy();
+      }
+    }
+  }
+
+  function cantDeploy(isWeekend) {
+    document.getElementById("body-wrapper").classList.add("not-deployment-day");
+    var messages = [
+      "NO",
+      "Deja de hinchar las pelotas",
+      "NAIN",
+      "😭",
+      "♿️♿️♿️",
+      "🤷🏻‍♂️",
+      "Qué haría el Mati?",
+      "No seas tan culiao",
+      "Sabes quienes deployan hoy? Los culosrotos",
+      "NOOOOOOOOOOOOOOO",
+      "Can you not?!?!?!?!?!?",
+      ":gaston:",
+      "NO DEPLOYES PORFAVOR",
+      "Es un hotfix? No? ENTONCES NI SE TE OCURRA CARA DE CLOACA",
+      "Andá a abrirte un fernet, no jodas",
+      "infarto al Ale incoming 🚑",
+      "SE QUEDA EN READY TO DEPLOY ESO",
+      "&%#@$&$%@#^$%@#$*@#",
+      "El que deploya hoy se la come. -Pablo Neruda",
+    ];
+    var weekendMessages = [
+      "Es finde culiao",
+      "Really? Hoy?",
+      "Por qué no estás durmiendo?",
+      "Es día no laboral, no jodas",
+      "La gente que deploya hoy 🚩🚩🚩🚩🚩🚩",
+    ];
+    var nonWeekendMessages = [
+      "Querés que no se debite nada?",
+      "Vas a romper todo",
+      "Escucho alguien que se quiere quedar trabajando hasta tarde",
+      "Dale para adelante si querés que te odien",
+      "Esa colocación que va a bajaaaar ⬇️⬇️⬇️⬇️",
+    ];
+
+    messages = isWeekend
+      ? messages.concat(weekendMessages)
+      : messages.concat(nonWeekendMessages);
+
+    var message = getRandomMessage(messages);
+
+    document.getElementById("message").innerHTML = message;
+  }
+  function canDeploy() {
+    document.getElementById("body-wrapper").classList.add("deployment-day");
+    var messages = [
+      "Proceda",
+      "SI",
+      "DEPLOYA PERRITO",
+      "DALE (pero mirá el Sentry porfis)",
+      "GO GO GO",
+      "pero mirá como está ese deploy papá",
+      "🚀🚀🚀",
+      "yo? fan del deploy que vas a hacer",
+      "mandale a esa nueva funcionalidad",
+      "😎",
+      "🤜🤛",
+      "I BELIEVE IN THE DEPLOY SUPREMACY 🛐🛐🛐🛐🛐",
+      "🤘🏻",
+      "No te olvides de cambiar el estado de las tareas",
+      "god no",
+    ];
+    var message = getRandomMessage(messages);
+    document.getElementById("message").innerHTML = message;
+  }
+
+  function getRandomMessage(arr) {
+    var randomNumber = Math.floor(Math.random() * arr.length);
+    return arr[randomNumber];
+  }
+</script>
+
+<style>
+  body,
+  html {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+  }
+  .div-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    height: 100%;
+  }
+  .deployment-day {
+    background-color: #00d10e;
+  }
+  .not-deployment-day {
+    background-color: #ff4136;
+  }
+  #tagline {
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+      monospace;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 2.5rem;
+    line-height: 2.8rem;
+    margin: 2rem;
+  }
+  #message {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-weight: 900;
+    font-size: 7rem;
+    line-height: 8.5rem;
+    margin: 2rem;
+  }
+  #reload {
+    display: inline-block;
+    font: 300 1.5rem/1.5rem SFMono-Regular, Menlo, Monaco, Consolas,
+      Liberation Mono, Courier New, monospace;
+    border: 0;
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    margin: 2rem;
+  }
+</style>
